@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -16,7 +17,7 @@ namespace StokTakip.Controllers
 
         public StocksController(StokTakipContext context)
         {
-            _context = context;
+            _context = context; 
         }
 
         // GET: Stocks
@@ -57,7 +58,7 @@ namespace StokTakip.Controllers
             image.CopyTo(ms);
 
             return new Image
-            { 
+            {
                 ContentType = image.ContentType,
                 Data = ms.ToArray(),
                 FileName = image.FileName,
@@ -143,8 +144,7 @@ namespace StokTakip.Controllers
                 return NotFound();
             }
 
-            var stock = await _context.Stock
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var stock = await _context.Stock.FirstOrDefaultAsync(m => m.Id == id);
             if (stock == null)
             {
                 return NotFound();
@@ -162,6 +162,7 @@ namespace StokTakip.Controllers
             {
                 return Problem("Entity set 'StokTakipContext.Stock'  is null.");
             }
+
             var stock = await _context.Stock.FindAsync(id);
             if (stock != null)
             {
@@ -175,6 +176,12 @@ namespace StokTakip.Controllers
         private bool StockExists(Guid id)
         {
             return _context.Stock.Any(e => e.Id == id);
+        }
+
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        public IActionResult Error()
+        {
+            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
     }
 }

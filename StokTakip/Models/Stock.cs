@@ -7,15 +7,17 @@ namespace StokTakip.Models
     {
         public Guid Id { get; set; } = Guid.NewGuid();
 
+        public string Code { get; set; }
+
         public string Name { get; set; }
 
         public bool Status { get; set; }
 
-        public decimal? BuyingPrice { get; set; }
+        public int? BuyingPrice { get; set; }
 
-        public decimal? SellingPrice { get; set; }
+        public int? SellingPrice { get; set; }
 
-        public decimal? Quantity { get; set; }
+        public int? Quantity { get; set; }
 
         [NotMapped]
         public IFormFile? Image  { get; set; }

@@ -4,16 +4,20 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>Stock List</h1>
 
 <p>
     <a asp-action="Create">Create New</a>
 </p>
+
 <table class="table">
     <thead>
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.Image)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Code)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Name)
@@ -44,6 +48,9 @@
                         <img style="max-height:20px;" src="@String.Format("data:image/png;base64,{0}", Convert.ToBase64String(item.ImageData.Data))" />
                         <span class="text-info">@item.ImageData.FileName </span>
                     }
+                </td>
+                 <td>
+                    @Html.DisplayFor(modelItem => item.Code)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Name)

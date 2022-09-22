@@ -21,6 +21,6 @@ namespace StokTakip.Data
             base.OnModelCreating(modelBuilder);
         }
 
-        public DbSet<StokTakip.Models.Stock> Stock { get; set; } = default!;
+        public DbSet<Stock> Stock { get; set; } = default!;
     }
 }
