@@ -2,6 +2,7 @@
 
 @{
     ViewData["Title"] = "Index";
+    int? totalSalesRevenue = ViewBag.TotalSalesRevenue;
 }
 
 <h1>Stock List</h1>
@@ -34,7 +35,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.Quantity)
             </th>
-
+            <th>
+                @Html.DisplayNameFor(model => model.SalesRevenue)
+            </th>
             <th></th>
         </tr>
     </thead>
@@ -68,6 +71,9 @@
                     @Html.DisplayFor(modelItem => item.Quantity)
                 </td>
                 <td>
+                    @Html.DisplayFor(modelItem => item.SalesRevenue)
+                </td>
+                <td>
                     <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
                     <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
                     <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
@@ -75,4 +81,21 @@
             </tr>
         }
     </tbody>
+    <tfoot>
+        <tr>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th>
+                TotalSalesRevenue
+            </th>
+            <th> 
+                @totalSalesRevenue
+            </th>
+            <th></th>
+        </tr>
+    </tfoot>
 </table>

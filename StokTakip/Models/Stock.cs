@@ -23,6 +23,9 @@ namespace StokTakip.Models
         public IFormFile? Image  { get; set; }
 
         public Image? ImageData { get; set; }
+
+        [NotMapped]
+        public int? SalesRevenue { get; set; }
     }
 
     public class Image 
@@ -34,6 +37,5 @@ namespace StokTakip.Models
         public long Length { get; set; }
 
         public string FileName { get; set; }
-
     }
 }

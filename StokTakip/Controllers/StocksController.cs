@@ -17,16 +17,35 @@ namespace StokTakip.Controllers
 
         public StocksController(StokTakipContext context)
         {
-            _context = context; 
+            _context = context;
         }
 
         // GET: Stocks
+        // liste sayfamız
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Stock.ToListAsync());
+            var stockList = await _context.Stock.ToListAsync();
+
+            // Satış Gelirini Hesaplayan Döngümüz
+            foreach (var item in stockList)
+            {
+                item.SalesRevenue = ((item.SellingPrice ?? 0) - (item.BuyingPrice ?? 0)) * (item.Quantity ?? 0);
+            }
+
+            // Toplam Satış Gelirini Hesaplayan Döngümüz
+            int? totalSalesRevenue = 0;
+            for (int i = 0; i < stockList.Count; i++)
+            {
+                totalSalesRevenue += stockList[i].SalesRevenue;
+            }
+
+            ViewBag.TotalSalesRevenue = totalSalesRevenue;
+             
+            return View(stockList);
         }
 
         // GET: Stocks/Details/5
+        // Stoğun id sini alıp stoğu geri dönüyoruz
         public async Task<IActionResult> Details(Guid? id)
         {
             if (id == null || _context.Stock == null)
@@ -155,7 +174,7 @@ namespace StokTakip.Controllers
 
         // POST: Stocks/Delete/5
         [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
+        [ValidateAntiForgeryToken]  
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
             if (_context.Stock == null)
